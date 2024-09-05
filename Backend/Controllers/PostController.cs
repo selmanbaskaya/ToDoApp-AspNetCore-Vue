@@ -25,7 +25,14 @@ namespace Backend.Controllers
         [HttpPost("addPost")]
         public async Task<IActionResult> AddPost([FromBody] Post post)
         {
-            await _postService.AddPostAsync(post);
+            var formattedPost = new Post
+            {
+                Title = post.Title,
+                Content = post.Content,
+                UserId = post.UserId
+            };
+
+            await _postService.AddPostAsync(formattedPost);
             return Ok(new { message = "Post added successfully" });
         }
 

@@ -14,6 +14,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // PostService'i DI container'a ekle
 builder.Services.AddScoped<PostService>();
+builder.Services.AddScoped<UserService>();
 
 // Swagger'ı ekle
 builder.Services.AddEndpointsApiExplorer();
