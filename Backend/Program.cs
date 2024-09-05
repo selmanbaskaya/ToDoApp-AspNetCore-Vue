@@ -1,7 +1,9 @@
 using Backend.Data;
-using Microsoft.EntityFrameworkCore;
+using Backend.Models;
 using Backend.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,9 +14,12 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection")));
 
-// PostService'i DI container'a ekle
+// Servisleri DI container'a ekle
 builder.Services.AddScoped<PostService>();
 builder.Services.AddScoped<UserService>();
+
+// Şifre hashleme hizmetini ekle
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
 // Swagger'ı ekle
 builder.Services.AddEndpointsApiExplorer();

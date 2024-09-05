@@ -15,6 +15,7 @@ namespace Backend.Services
 
         public async Task<User> AddUser(User user)
         {
+            user.CreatedDate = DateTime.UtcNow;
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
             return user;
