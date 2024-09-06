@@ -14,6 +14,8 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection")));
 
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 // Servisleri DI container'a ekle
 builder.Services.AddScoped<PostService>();
 builder.Services.AddScoped<UserService>();
