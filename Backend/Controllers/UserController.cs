@@ -41,10 +41,10 @@ namespace Backend.Controllers
         }
 
         [HttpPost("deleteUser")]
-        public async Task<IActionResult> DeleteUser([FromBody] int id)
+        public async Task<IActionResult> DeleteUser([FromBody] User user)
         {
-            await _userService.DeleteUser(id);
-            return NoContent();
+            await _userService.DeleteUser(user.Id);
+            return Ok(new { message = "User deleted successfully" });
         }
     }
 }

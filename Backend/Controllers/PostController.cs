@@ -37,9 +37,9 @@ namespace Backend.Controllers
         }
 
         [HttpPost("deletePost")]
-        public async Task<IActionResult> DeletePost([FromBody] int Id)
+        public async Task<IActionResult> DeletePost([FromBody] Post post)
         {
-            await _postService.DeletePostAsync(Id);
+            await _postService.DeletePostAsync(post.Id);
             return Ok(new { message = "Post deleted successfully" });
         }
     }
