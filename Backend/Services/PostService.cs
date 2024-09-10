@@ -15,23 +15,44 @@ namespace Backend.Services
 
         public async Task<List<Post>> GetPostsAsync()
         {
-            return await _context.Posts.ToListAsync();
+            try
+            {
+                return await _context.Posts.ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving posts.", ex);
+            }
         }
 
         public async Task AddPostAsync(Post post)
         {
-            post.CreatedDate = DateTime.UtcNow;
-            _context.Posts.Add(post);
-            await _context.SaveChangesAsync();
+            try
+            {
+                post.CreatedDate = DateTime.UtcNow;
+                _context.Posts.Add(post);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while adding the post.", ex);
+            }
         }
 
         public async Task DeletePostAsync(int Id)
         {
-            var post = await _context.Posts.FindAsync(Id);
-            if (post != null)
+            try
             {
-                _context.Posts.Remove(post);
-                await _context.SaveChangesAsync();
+                var post = await _context.Posts.FindAsync(Id);
+                if (post != null)
+                {
+                    _context.Posts.Remove(post);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the post.", ex);
             }
         }
     }

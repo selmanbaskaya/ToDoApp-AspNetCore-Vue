@@ -18,29 +18,50 @@ namespace Backend.Controllers
         [HttpGet("getPosts")]
         public async Task<IActionResult> GetPosts()
         {
-            var posts = await _postService.GetPostsAsync();
-            return Ok(posts);
+            try
+            {
+                var posts = await _postService.GetPostsAsync();
+                return Ok(posts);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while retrieving posts.", ex);
+            }
         }
 
         [HttpPost("addPost")]
         public async Task<IActionResult> AddPost([FromBody] Post post)
         {
-            var formattedPost = new Post
+            try
             {
-                Title = post.Title,
-                Content = post.Content,
-                UserId = post.UserId
-            };
+                var formattedPost = new Post
+                {
+                    Title = post.Title,
+                    Content = post.Content,
+                    UserId = post.UserId
+                };
 
-            await _postService.AddPostAsync(formattedPost);
-            return Ok(new { message = "Post added successfully" });
+                await _postService.AddPostAsync(formattedPost);
+                return Ok(new { message = "Post added successfully" });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while adding the post.", ex);
+            }
         }
 
         [HttpPost("deletePost")]
         public async Task<IActionResult> DeletePost([FromBody] Post post)
         {
-            await _postService.DeletePostAsync(post.Id);
-            return Ok(new { message = "Post deleted successfully" });
+            try
+            {
+                await _postService.DeletePostAsync(post.Id);
+                return Ok(new { message = "Post deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurred while deleting the post.", ex);
+            }
         }
     }
 }
